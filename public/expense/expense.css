@@ -1,0 +1,133 @@
+/* Reset some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  header {
+    padding: 1rem 0;
+    text-align: center;
+    background-color: #3498db;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    background-color: #f0f0f0;
+    color: #333;
+  }
+  
+  ul {
+    list-style: none;
+  }
+  
+  label {
+    color: brown;
+    font-weight: bold;
+  }
+  
+  input {
+    color: #333;
+    /* width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;  */
+  }
+  
+  h2 {
+    text-align: center;
+    color: #e04242;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  #my-form {
+    padding: 2rem;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: #e8b398;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    transition: background 0.3s ease;
+  }
+  
+  .btn:hover {
+    background: #cfe465;
+  }
+  
+  #dataShowbtn {
+    color: white;
+    background-color: black;
+    border: none;
+    border-radius: 10px;
+    padding: 5px 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    transition: background 0.3s ease;
+  }
+  
+  #dataShowbtn:hover {
+    background: #9ab3f7;
+    
+  }
+  
+  #datashowno {
+    color: #e89898;
+    /* font-weight: bold; */
+    /* color: white; */
+    /* background-color: black; */
+    border-radius: 10px;
+  }
+  
+  /* Unique animation */
+  @keyframes rotate-scale {
+    0% {
+      transform: rotate(0deg) scale(0);
+      opacity: 0;
+    }
+    50% {
+      transform: rotate(360deg) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: rotate(720deg) scale(0);
+      opacity: 0;
+    }
+  }
+  
+  /* Apply the animation to elements with the animate class */
+  .animate {
+    animation: rotate-scale 3s linear infinite;
+  }
+  #my-form input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #e5cbcb;
+  }
+  #my-form input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #e5cbcb;
+    color: #e04242;
+  }
+  

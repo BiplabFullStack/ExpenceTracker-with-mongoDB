@@ -1,0 +1,148 @@
+
+body {
+    background-image: url("https://images.wallpaperscraft.com/image/single/starry_sky_boat_reflection_125803_3840x2160.jpg");  /* Replace with your background image URL */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.container {
+    max-width: 400px;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.8); /* Add transparency to the container */
+    backdrop-filter: blur(10px); /* Apply backdrop blur for a frosted glass effect */
+    animation: fadeInUp 1s ease;
+    background-image: url("https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8dGVjaG5vbG9neXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60");
+    box-shadow: -1px 1px 60px 10px black inset;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+form {
+    animation: fadeInUp 1s ease 0.3s;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    animation: fadeInUp 1s ease 0.6s forwards;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #444;
+    transition: color 0.3s ease;
+}
+
+.form-group input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    transform: translateY(10px);
+    opacity: 0;
+}
+
+.form-group input:focus {
+    outline: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-group.fade-in {
+    animation: fadeInUp 1s ease 0.6s forwards;
+}
+
+.form-group input.fade-in {
+    animation: fadeInUp 1s ease 0.9s forwards;
+}
+
+.btn {
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+    transition: background-color 0.3s ease;
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+.btn.fade-in {
+    animation: fadeInUp 1s ease 1.2s forwards;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+a {
+    display: block;
+    text-align: center;
+     margin-top: 10px; 
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+
+    margin-bottom: 20px;
+  opacity: 0;
+  transform: translateY(20px);
+   animation: fadeInUp 1.5s 2s ease forwards; 
+}
+
+a:hover {
+    color: #0056b3;
+}
+
+header {
+    text-align: center;
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: fadeInUp 1s ease 0.6s forwards;
+}
+
+ header h1 {
+    font-size: 3rem;
+    color: #007bff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+} 
+
+header p {
+    font-size: 1.2rem;
+    color: #b4e3e9;
+}
+
+
+
+
+
+
+
+  
+
+
+  
+  
