@@ -10,13 +10,9 @@ const bcrypt = require('bcrypt')
 
 
 const forgotPasswordEmail = async (req, res, next) => {
-    const forgotUserEmail = req.body.email;
-    // console.log('forgotUserEmail ---> ', forgotUserEmail);
-    // console.log('API_KEY:', process.env.API_KEY);
+    const { email } = req.body;
 
-
-  //  Check if the email is valid (you can uncomment this if needed)
-    if (!isValidEmail(forgotUserEmail)) {
+    if (!isValidEmail(email)) {
         console.log(chalk.red('Please enter a correct email '));
         return res
             .status(400)
@@ -24,13 +20,13 @@ const forgotPasswordEmail = async (req, res, next) => {
     }
 
     try {
-        const user = await User.findOne({ email: forgotUserEmail });
+        const user = await User.findOne({ email });
 
         if (user) {
             const id = uuid.v4();
             await ForgotPassword.create({_id:id, active: true, userId: user._id });
 
-            // Rest of your code for sending the email remains unchanged
+           
             const client = Sib.ApiClient.instance;
 
             // Configure API key authorization: api-key
@@ -44,7 +40,7 @@ const forgotPasswordEmail = async (req, res, next) => {
             };
             const receivers = [
                 {
-                    email: forgotUserEmail,
+                    email
                 },
             ];
 
@@ -60,7 +56,7 @@ const forgotPasswordEmail = async (req, res, next) => {
                     textContent: 'Next, please go to our website and login.',
                 })
                 .then(result => {
-                    console.log(result);
+                    console.log('OTP send to your register email');
                     res.status(201).json({ success: true, message: 'We have sent you OTP in your user email account.' });
                 })
                 .catch(err => {
@@ -101,7 +97,7 @@ const resetpassword = async (req, res, next) => {
             </div>
             <div>
                 <label for="confirmpassword">Confirm Password :</label>
-                <input type="text" name="confirmpassword ">
+                <input type="text" name="confirmpassword" placeholder="Enter confirm password">
                     
             </div>
             <button>Save Password</button>
@@ -130,18 +126,18 @@ const updatePassword = async (req, res, next) => {
     try {
         const  confirmpassword  = req.query.password;
         const { resetpasswordid } = req.params;
-         console.log(confirmpassword);
-         console.log(resetpasswordid);
+        //  console.log(confirmpassword);
+        //  console.log(resetpasswordid);
 
         const forgetPasswordDetails = await ForgotPassword.findOne({_id:resetpasswordid})
-      console.log(forgetPasswordDetails);
+     // console.log(forgetPasswordDetails);
         if (forgetPasswordDetails) {
             bcrypt.hash(confirmpassword, 10, async (err, hash) => {
               // console.log(hash);
                 if (!err) {
                     //await signUp.updateOne({ password: hash },{ where: { id: forgetPasswordDetails.signUpId } })
                     await User.updateOne({_id: forgetPasswordDetails.userId },{$set:{password: hash}})
-                    console.log("Your Password Update Successfully ");
+                    console.log("Your Password Update Successfully , please go to login page");
                     res.status(201)
                     .send(`<html>
                     <div style="text-align: center;">
@@ -167,3 +163,5 @@ const updatePassword = async (req, res, next) => {
 }
 
 module.exports = { forgotPasswordEmail, resetpassword, updatePassword }
+
+

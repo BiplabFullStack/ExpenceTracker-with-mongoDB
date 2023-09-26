@@ -49,6 +49,7 @@ const createUser = async function(req, res){
                     number,
                     password:hash
                 });
+                console.log('Successfully Created your profile');
                 return res.status(201).send({success:false, data:savedata})
             }
         })

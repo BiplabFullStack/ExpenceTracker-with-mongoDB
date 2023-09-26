@@ -19,7 +19,7 @@ async function myWebFunc(event) {
         if (itemName && expense && item && category) {
             const token = localStorage.getItem('token')
             const postdata = await axios.post("http://localhost:8000/post-expense", myObj, { headers: { "Authorization": token } })
-
+           // window.location.reload()
             onScreenFunction(myObj);
 
            // console.log(`ItemName : ${itemName} -  Expense : ${expense} - Item : ${item} - Category : ${category}`);
@@ -37,51 +37,7 @@ async function myWebFunc(event) {
 
 
 
-//---------------------------------------------  Show on the Page -------------------------------------------------------
 
-// function onScreenFunction(myObj) {
-//     const ul = document.getElementById('listOnScreen');
-
-//     const li = document.createElement('li');
-//     li.innerHTML = `ItemName : ${myObj.itemName}  -  Expense : ${myObj.expense} - Item : ${myObj.item} -  Category : ${myObj.category} `;
-
-//     // Create Delete Button
-//     const delBtn = document.createElement('input');
-//     delBtn.value = 'Delete';
-//     delBtn.type = 'button';
-//     delBtn.style.backgroundColor = 'red'
-//     delBtn.style.color = 'white'
-//     delBtn.style.borderRadius = '8px'
-    
-
-//     //when Mouse over the Delete Button
-//     delBtn.addEventListener('mouseover', (e) => {
-//         delBtn.style.backgroundColor = 'green';
-//     })
-
-//     //when Mouse remove from Delete Button
-//     delBtn.addEventListener('mouseout', (e) => {
-//         delBtn.style.backgroundColor = 'red';
-//     })
-
-//     delBtn.onclick = async () => {
-//         if (confirm("Are you sure, want to cancel this expence ?")) {
-//             const token = localStorage.getItem('token')
-//             const deletedItem = await axios.delete(`http://localhost:8000/deletedata/${myObj.id}`, { headers: { "Authorization": token } })
-//             ul.removeChild(li);
-
-//         }
-//         else {
-//             console.log("Nothing");
-//         }
-//     }
-
-
-//     li.appendChild(delBtn);
-//     li.style.color = 'Maroon'
-//     ul.appendChild(li);
-
-// }
 
 function onScreenFunction(myObj) {
     const ul = document.getElementById('listOnScreen');
@@ -101,7 +57,7 @@ function onScreenFunction(myObj) {
 
     // Attach a click event listener to the delete button
     delBtn.addEventListener('click', async () => {
-        const confirmed = confirm("Are you sure you want to delete this expense?");
+        const confirmed = confirm("Are you sure want to delete this expense?");
         if (confirmed) {
             const token = localStorage.getItem('token');
             try {
@@ -110,6 +66,7 @@ function onScreenFunction(myObj) {
                     headers: { "Authorization": token }
                 });
                 ul.removeChild(li);
+                window.location.reload()
             } catch (error) {
                 console.error("Error deleting expense:", error);
             }

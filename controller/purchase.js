@@ -3,7 +3,7 @@ const Rozarpay=require('razorpay');
 const { generateAccessToken } = require('../service/tokengenerate')
 const purchasePremium = async (req, res, next) => {
     try {
-      
+        //create object and configer
         const rzp = new Rozarpay({
             key_id: process.env.razorPay_key_id,
             key_secret: process.env.razorPay_key_secret
@@ -12,6 +12,7 @@ const purchasePremium = async (req, res, next) => {
        
         const amount = 2500;
 
+        //create order
         rzp.orders.create({ amount, currency: "INR" }, async (err, order) => {
             if (err) {
                 throw new Error(JSON.stringify(err));
@@ -32,23 +33,20 @@ const purchasePremium = async (req, res, next) => {
 const updateTransactionStatus = async (req, res, next) => {
     try {
         const userId = req.user._id;
-        const firstName = req.user.firstName;
-        const email = req.user.email
+        const { firstName, email } = req.user
         const { payment_id, order_id } = req.body;
 
-        console.log("Is the payment successful?", payment_id);
-        console.log("Payment ID and Order ID:", payment_id, order_id);
+        // console.log("Is the payment successful?", payment_id);
+        // console.log("Payment ID and Order ID:", payment_id, order_id);
 
-        // Find the order by its order_id
         const order = await Order.findOne({ orderid: order_id });
 
         if (!order) {
-            // If the order is not found, return a 404 response
+
             return res.status(404).json({ success: false, message: 'Order not found' });
         }
 
         if (payment_id === null) {
-            // If payment_id is null, it means the payment failed
 
             // Update the order status to 'FAILED'
             order.paymentid = payment_id;
@@ -59,10 +57,9 @@ const updateTransactionStatus = async (req, res, next) => {
             req.user.ispremium = false;
             await req.user.save();
 
-            // Return a 202 response indicating the transaction status
+
             return res.status(202).json({ success: false, message: 'Transaction failed' });
         } else {
-            // If payment_id is not null, it means the payment was successful
 
             // Update the order status to 'SUCCESSFUL'
             order.paymentid = payment_id;
@@ -73,10 +70,12 @@ const updateTransactionStatus = async (req, res, next) => {
             req.user.ispremium = true;
             await req.user.save();
 
-            // Generate a new access token for the user (assuming you have a function for this)
+            // Generate a new access token 
             const token = generateAccessToken(userId, firstName, email);
+          //  console.log('New token -->',token);
 
             // Return a 202 response indicating the transaction status, along with the new access token
+            console.log("Congrasulation you are now premium user");
             return res.status(202).json({
                 success: true,
                 message: 'Transaction successful',
@@ -84,7 +83,6 @@ const updateTransactionStatus = async (req, res, next) => {
             });
         }
     } catch (err) {
-        // Handle any unexpected errors that occur
         console.log(err);
         return res.status(500).json({ success: false, message: 'Transaction update failed' });
     }

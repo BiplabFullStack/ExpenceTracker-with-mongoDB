@@ -2,12 +2,13 @@
 
 const chalk = require("chalk");
 const Expense = require('../model/expense')
-const User = require('../model/signup')
 const { isValidName, isValidInteger } = require('../validator/validation')
+const mongoose = require('mongoose')
 
 // ---------------------------------------------------------- Post Expence ----------------------------------------------------------------------
 
 const postAddExpence = async (req, res, next) => {
+    const session = await mongoose.startSession()
     
     try {
         const { itemName, expense, item, category } = req.body;
@@ -27,6 +28,7 @@ const postAddExpence = async (req, res, next) => {
             console.log('category should include alphabet only');
             return res.status(400).send({success: false, msg: 'category should include alphabet only'})
         }
+        session.startTransaction()
         const data = await Expense.create({
             itemName,
             expense,
@@ -37,21 +39,25 @@ const postAddExpence = async (req, res, next) => {
         })
 
         const totalexpense = Number(req.user.totalexpense) + Number(expense)
-       // await User.findOneAndUpdate({_id:req.user._id},{$set:{totalexpense}},{new:true})
+       // const updatedDoc = await User.findOneAndUpdate({_id:req.user._id},{$set:{totalexpense}},{new:true})
        req.user.totalexpense = totalexpense
        await req.user.save()
      
         res.status(201).json({ status: true, msg: "Tracker Successfully Created " })
         console.log(chalk.magenta(`Expense  -> itemName: ${itemName} - Expense: ${expense} - Item: ${item} - Category: ${category}`));
+        await session.commitTransaction()
+        session.endSession()
     }
     catch (err) {
         console.log(err.message)
+        await session.abortTransaction()
+        session.endSession()
         res.status(500).json({ Success: false, msg: "Server Error" })
     }
 }
 
 const getAllExpence=async(req,res,next)=>{
-    const ITEMS_PER_PAGE = Number(req.query.ITEM_PER_PAGE)
+    const ITEMS_PER_PAGE = Number(req.query.ITEM_PER_PAGE)|| 2
     //console.log(req.user.id)
     let page= Number(req.query.page) ||1;
     try{
@@ -75,22 +81,25 @@ const getAllExpence=async(req,res,next)=>{
         res.status(500).json({ error: 'error occure data fetching time' });
     }
     
-
 }
 
 const deleteExpense = async function(req, res){
+   
     try{
-        const userId = req.params.id;
+     
+        const documentId = req.params.id;
        // console.log('new userid -->',userId);
-        const getExpense = await Expense.findOne({_id : userId})
+        const getExpense = await Expense.findOne({_id : documentId})
        // console.log('getExpense.expense -->', getExpense.expense);
-       await Expense.deleteOne({_id : userId})
+       await Expense.deleteOne({_id : documentId})
 
        const totalexpense = Number(req.user.totalexpense) - Number(getExpense.expense)
        // await User.findOneAndUpdate({_id:req.user._id},{$set:{totalexpense}},{new:true})
        req.user.totalexpense = totalexpense
        await req.user.save()
+       console.log('Expence Successfully Deleted');
         res.status(200).json({ status: true, msg: "Expence Successfully Deleted" })
+    
     }
     catch(err){
         console.log(err);

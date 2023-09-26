@@ -10,10 +10,10 @@ async function myloginFunc(event){
         event.target.reset()
         const myObj = { username,password };
         const response = await axios.post(`http://localhost:8000/login`,myObj);
-        console.log(response.data.token);
+       // console.log(response.data.token);
         if(response.status == 200){
             alert("login Successfully")
-            console.log('token ---->',response.data.token);
+          //  console.log('token ---->',response.data.token);
             localStorage.setItem('token',response.data.token);
             window.location.href ="../expense/expense.html";
         }

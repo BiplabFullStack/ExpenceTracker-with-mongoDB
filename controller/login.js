@@ -2,15 +2,12 @@ const User = require('../model/signup')
 const bcrypt = require('bcrypt')
 
 const { generateAccessToken } = require('../service/tokengenerate')
-const { isEmpty, isValidEmail, isValidPassword } = require('../validator/validation')
+const { isValidEmail, isValidPassword } = require('../validator/validation')
 
 const userlogin = async function (req, res) {
     try {
         const { username, password } = req.body;
-        console.log(username, password );
-        // if (!isEmpty(username) && !isEmpty(password)) {
-        //     return res.status(400).send({ success: false, msg: 'please fill both the fill currectlly' })
-        // }
+  
         if (!isValidEmail(username)) {
             console.log('Email must be provide currect format');
             return res.status(400).send({ success: false, msg: 'Email must be provide currect format' })
@@ -24,7 +21,7 @@ const userlogin = async function (req, res) {
         if (checkCredensials) {
             bcrypt.compare(password, checkCredensials.password, (err, result) => {
                 if (err) {
-                    console.log('Something went wrong');
+                    console.log('Something went wrong login time');
                     return res.status(500).json({ status: false, msg: 'Something went wrong' })
                 }
                 if (result) {
@@ -54,14 +51,10 @@ const premium = async (req, res, next) => {
             .status(200)
             .send(validPrimiumUser)
         }
-        
     }
     catch(err){
         console.log(err.message);
     }
-    
-
-
 }
 
 module.exports = { userlogin , premium};

@@ -7,7 +7,7 @@ const authenticate =  (req, res, next) => {
         const token = req.header('Authorization');
        // console.log('token ---->',token);
         const user = jwt.verify(token, process.env.secret);
-        console.log('UserId --> ', user.userId);
+        //console.log('UserId --> ', user.userId);
 
         User.findById(user.userId).then(user => {
             req.user = user;

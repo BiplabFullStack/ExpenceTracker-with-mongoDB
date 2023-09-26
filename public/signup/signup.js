@@ -8,7 +8,6 @@ async function mySignUpFunc(event){
     const email = document.getElementById('email').value;
     const number = document.getElementById('number').value;
     const password = document.getElementById('password').value;
-    console.log(number);
     event.target.reset();
 
     const myObj={ firstName, lastName, email, number, password };
